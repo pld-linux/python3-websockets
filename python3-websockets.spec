@@ -6,7 +6,7 @@
 Summary:	An implementation of the WebSocket Protocol for python with asyncio
 Name:		python3-%{module}
 Version:	9.0.2
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
