@@ -5,24 +5,27 @@
 %define		module	websockets
 Summary:	An implementation of the WebSocket Protocol for python with asyncio
 Name:		python3-%{module}
-Version:	9.0.2
-Release:	3
+Version:	12.0
+Release:	1
 License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	af69f3188f6530acf4a79a901a698595
-Patch0:		sphinx3.patch
+# Source0-md5:	df53aadc76462a95d58098c685dfcdca
 URL:		https://pypi.python.org/pypi/websockets
-BuildRequires:	python3-modules >= 1:3.2
+BuildRequires:	python3-modules >= 1:3.8
 BuildRequires:	python3-setuptools
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
 %if %{with doc}
+BuildRequires:	python3-furo
+BuildRequires:	python3-sphinx_copybutton
+BuildRequires:	python3-sphinx_inline_tabs
 BuildRequires:	python3-sphinxcontrib-trio
+BuildRequires:	python3-sphinxext.opengraph
 BuildRequires:	sphinx-pdg-3
 %endif
-Requires:	python3-modules >= 1:3.2
+Requires:	python3-modules >= 1:3.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -45,7 +48,6 @@ Dokumentacja API modułu Pythona %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
 
 %build
 %py3_build
@@ -83,6 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/%{module}/legacy
 %{py3_sitedir}/%{module}/legacy/*.py
 %{py3_sitedir}/%{module}/legacy/__pycache__
+%{py3_sitedir}/%{module}/sync/*.py
+%{py3_sitedir}/%{module}/sync/__pycache__
 %{py3_sitedir}/%{module}-%{version}-py*.egg-info
 %{_examplesdir}/%{name}-%{version}
 
