@@ -6,7 +6,7 @@
 Summary:	An implementation of the WebSocket Protocol for python with asyncio
 Name:		python3-%{module}
 Version:	12.0
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
@@ -89,6 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/%{module}/legacy
 %{py3_sitedir}/%{module}/legacy/*.py
 %{py3_sitedir}/%{module}/legacy/__pycache__
+%dir %{py3_sitedir}/%{module}/sync
 %{py3_sitedir}/%{module}/sync/*.py
 %{py3_sitedir}/%{module}/sync/__pycache__
 %{py3_sitedir}/%{module}-%{version}-py*.egg-info
