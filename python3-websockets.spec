@@ -14,6 +14,7 @@ Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{ve
 URL:		https://pypi.python.org/pypi/websockets
 BuildRequires:	python3-modules >= 1:3.8
 BuildRequires:	python3-setuptools
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
@@ -39,6 +40,7 @@ it provides an elegant coroutine-based API.
 Summary:	API documentation for Python %{module} module
 Summary(pl.UTF-8):	Dokumentacja API modułu Pythona %{module}
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 API documentation for Python %{module} module.
