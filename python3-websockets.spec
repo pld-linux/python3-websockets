@@ -12,6 +12,7 @@ Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	df53aadc76462a95d58098c685dfcdca
 URL:		https://pypi.python.org/pypi/websockets
+BuildRequires:	python3 >= 1:3.8
 BuildRequires:	python3-modules >= 1:3.8
 BuildRequires:	python3-setuptools
 BuildRequires:	rpm-build >= 4.6
