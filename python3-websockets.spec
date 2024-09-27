@@ -5,12 +5,12 @@
 %define		module	websockets
 Summary:	An implementation of the WebSocket Protocol for python with asyncio
 Name:		python3-%{module}
-Version:	12.0
-Release:	2
+Version:	13.1
+Release:	1
 License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	df53aadc76462a95d58098c685dfcdca
+# Source0-md5:	43c32a1842d443cb41cadf1361612731
 URL:		https://pypi.python.org/pypi/websockets
 BuildRequires:	python3 >= 1:3.8
 BuildRequires:	python3-devel >= 1:3.8
@@ -83,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/%{module}/py.typed
 %attr(755,root,root) %{py3_sitedir}/%{module}/*.so
 %{py3_sitedir}/%{module}/__pycache__
+%dir %{py3_sitedir}/%{module}/asyncio
+%{py3_sitedir}/%{module}/asyncio/*.py
+%{py3_sitedir}/%{module}/asyncio/__pycache__
 %dir %{py3_sitedir}/%{module}/extensions
 %{py3_sitedir}/%{module}/extensions/*.py
 %{py3_sitedir}/%{module}/extensions/__pycache__
