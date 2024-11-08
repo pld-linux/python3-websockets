@@ -3,7 +3,8 @@
 %bcond_without	doc	# API documentation
 
 %define		module	websockets
-Summary:	An implementation of the WebSocket Protocol for python with asyncio
+Summary:	An implementation of the WebSocket Protocol for Python with asyncio
+Summary(pl.UTF-8):	Implementacja protokołu WebSocket dla Pythona z asyncio
 Name:		python3-%{module}
 Version:	13.1
 Release:	1
@@ -11,7 +12,7 @@ License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	43c32a1842d443cb41cadf1361612731
-URL:		https://pypi.python.org/pypi/websockets
+URL:		https://pypi.org/project/websockets/
 BuildRequires:	python3 >= 1:3.8
 BuildRequires:	python3-devel >= 1:3.8
 BuildRequires:	python3-modules >= 1:3.8
@@ -38,6 +39,14 @@ Python with a focus on correctness and simplicity.
 Built on top of asyncio, Python's standard asynchronous I/O framework,
 it provides an elegant coroutine-based API.
 
+%description -l pl.UTF-8
+websockets to biblioteka do tworzenia serwerów i klientów WebSocket w
+Pythonie, rozwijana z myślą głównie o poprawności i prostocie.
+
+Jest zbudowana w oparciu o asyncio - standardowym szkielecie Pythona
+do asynchronicznego we/wy, zapewniającym eleganckie API oparte na
+korutynach.
+
 %package apidocs
 Summary:	API documentation for Python %{module} module
 Summary(pl.UTF-8):	Dokumentacja API modułu Pythona %{module}
@@ -59,13 +68,14 @@ Dokumentacja API modułu Pythona %{module}.
 %if %{with doc}
 %{__make} -C docs html \
 	SPHINXBUILD=sphinx-build-3
-rm -rf docs/_build/html/_sources
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %py3_install
+
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/%{module}/speedups.c
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
 cp -a example/* $RPM_BUILD_ROOT%{_examplesdir}/python3-%{module}-%{version}
@@ -80,6 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.rst
 %dir %{py3_sitedir}/%{module}
 %{py3_sitedir}/%{module}/*.py
+%{py3_sitedir}/%{module}/*.pyi
 %{py3_sitedir}/%{module}/py.typed
 %attr(755,root,root) %{py3_sitedir}/%{module}/*.so
 %{py3_sitedir}/%{module}/__pycache__
@@ -101,5 +112,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc docs/_build/html/*
+%doc docs/_build/html/{_downloads,_images,_static,faq,howto,intro,project,reference,topics,*.html,*.js}
 %endif
