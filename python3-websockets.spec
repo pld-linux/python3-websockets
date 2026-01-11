@@ -1,22 +1,28 @@
 #
 # Conditional build:
 %bcond_without	doc	# API documentation
+%bcond_without	tests	# unit tests
 
 %define		module	websockets
 Summary:	An implementation of the WebSocket Protocol for Python with asyncio
 Summary(pl.UTF-8):	Implementacja protokołu WebSocket dla Pythona z asyncio
 Name:		python3-%{module}
-Version:	13.1
-Release:	3
+Version:	16.0
+Release:	1
 License:	BSD-like
 Group:		Libraries/Python
 Source0:	https://github.com/aaugustin/websockets/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	43c32a1842d443cb41cadf1361612731
+# Source0-md5:	792e408fc003a24d7a3c40e93dc31c1b
 URL:		https://pypi.org/project/websockets/
-BuildRequires:	python3 >= 1:3.8
-BuildRequires:	python3-devel >= 1:3.8
-BuildRequires:	python3-modules >= 1:3.8
+BuildRequires:	python3 >= 1:3.10
+BuildRequires:	python3-devel >= 1:3.10
+BuildRequires:	python3-modules >= 1:3.10
 BuildRequires:	python3-setuptools
+%if %{with tests}
+# TODO: (some tests skipped when not installed)
+#BuildRequires:	python3-mitmproxy
+#BuildRequires:	python3-socks
+%endif
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -25,11 +31,13 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	python3-furo
 BuildRequires:	python3-sphinx_copybutton
 BuildRequires:	python3-sphinx_inline_tabs
+BuildRequires:	python3-sphinxcontrib-spelling
 BuildRequires:	python3-sphinxcontrib-trio
 BuildRequires:	python3-sphinxext.opengraph
+BuildRequires:	python3-werkzeug
 BuildRequires:	sphinx-pdg-3
 %endif
-Requires:	python3-modules >= 1:3.8
+Requires:	python3-modules >= 1:3.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,6 +73,11 @@ Dokumentacja API modułu Pythona %{module}.
 %build
 %py3_build
 
+%if %{with tests}
+PYTHONPATH=$(readlink -f build-3/lib.*) \
+%{__python3} -m unittest
+%endif
+
 %if %{with doc}
 %{__make} -C docs html \
 	SPHINXBUILD=sphinx-build-3
@@ -87,12 +100,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.rst
+%doc LICENSE README.rst SECURITY.md
+%attr(755,root,root) %{_bindir}/websockets
 %dir %{py3_sitedir}/%{module}
 %{py3_sitedir}/%{module}/*.py
 %{py3_sitedir}/%{module}/*.pyi
 %{py3_sitedir}/%{module}/py.typed
-%attr(755,root,root) %{py3_sitedir}/%{module}/*.so
+%{py3_sitedir}/%{module}/*.so
 %{py3_sitedir}/%{module}/__pycache__
 %dir %{py3_sitedir}/%{module}/asyncio
 %{py3_sitedir}/%{module}/asyncio/*.py
